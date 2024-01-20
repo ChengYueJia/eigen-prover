@@ -7,9 +7,8 @@ use ethers_providers::{Http, Provider};
 
 use revm::db::{CacheDB, EmptyDB, EthersDB};
 use revm::primitives::{Address, Env, ResultAndState, TransactTo, U256};
-use revm::Database;
+use revm::{Database, Evm};
 use revm::DatabaseCommit;
-use revm::EVM;
 
 use std::env as stdenv;
 use std::io::BufWriter;
@@ -116,7 +115,7 @@ async fn main() -> anyhow::Result<()> {
             cache_db.insert_account_info(to_acc, acc_info);
         }
     }
-    let mut evm = EVM::new();
+    let mut evm = Evm::new();
     evm.database(cache_db);
 
     let mut env = Env::default();
